@@ -1,22 +1,8 @@
 {
-  "name": "batonpass-demo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/abhay-agarwal/batonpass-demo.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/abhay-agarwal/batonpass-demo/issues"
-  },
+  "name": "directory-react-nodejs",
+  "description": "React Node.js sample app",
+  "version": "0.0.1",
   "dependencies": {
-    "express": "^4.12.3"
-  },
-  "homepage": "https://github.com/abhay-agarwal/batonpass-demo#readme"
+    "express": "^4.10.6"
+  }
 }
