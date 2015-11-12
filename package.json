@@ -3,6 +3,10 @@
   "description": "React Node.js sample app",
   "version": "0.0.1",
   "dependencies": {
-    "express": "^4.10.6"
+    "express": "^4.10.6",
+    "js-yaml": "~3",
+    "coffee-script": "~1.10",
+    "request": "~2",
+    "sleep": "~3"
   }
 }

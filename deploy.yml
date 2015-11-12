@@ -1,0 +1,42 @@
+build:
+    id: buildci
+    repository: git@github.com:abhay-agarwal/batonpass-demo.git
+    image: abhayagarwal/batonpass-demo
+    rootDirectory: ./
+    imageTag: none
+    postBuildAction: testOnBuild
+
+test:
+    containerInfo:
+        type: DOCKER
+        docker:
+            image: registry.hub.docker.com/abhayagarwal/jenkins-slave
+            privileged: true
+            network: HOST
+            forcePullImage: true
+    postTestAction: stagingOnTest
+
+staging:
+    id: batonpass-demo
+    requestType: SERVICE
+    rackSensitive: false
+    loadBalanced: false
+    rackAffinity: []
+    postStagingAction: deployOnStaging
+    instances: 1
+
+deploy:
+    id: run0
+    skipHealthchecksOnDeploy: false
+    containerInfo:
+        type: DOCKER
+        docker:
+            image: registry.hub.docker.com/abhayagarwal/batonpass-demo
+            privileged: false
+            network: HOST
+            forcePullImage: true
+    resources:
+        cpus: 0.25
+        memoryMb: 256
+        numPorts: 0
+    instances: 1
