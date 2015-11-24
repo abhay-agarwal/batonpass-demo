@@ -4,7 +4,7 @@
 
 Employee directory is a sample application that allows you to look up employees by name, view the details of an employee,
 call, text, or email an employee, and navigate up and down the org chart.
-
+It is a nice sample app.
 This version of Employee Directory is built with [React](http://facebook.github.io/react/) and [Node.js]().
 
 ![alt tag](assets/directory_search.png)
