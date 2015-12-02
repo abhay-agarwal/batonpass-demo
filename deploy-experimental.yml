@@ -1,0 +1,68 @@
+#!1.0
+# The first line denotes the version of this deploy configuration we are using
+
+name: batonpass-demo #used for identification and service discovery
+version: 1.1.1 #version update triggers upgrades for dependent jobs, microservices, etc. that want to autoupdate
+tags: ["this", "that"]  #used to tag a service with certain characteristics that define its deploy pipeline
+                        #this allows a company to update their pipeline while updating their actual code
+                        #or allows an operator to view a list of services by their tag
+repository:
+    type: GIT
+    location: git@github.com:abhay-agarwal/batonpass-demo.git
+    rootDirectory: ./ #directory that has the dockerfile, etc.
+    sslCertificate: #blah blah
+
+resource:
+    type: SERVICE
+    #options:
+    #SERVICE (long running)
+    #SCHEDULED (cron)
+    #DEPENDENT (starts when another job is healthy or is finished)
+    #CHILD (doesn't run automatically, but runs as a part of another resource)
+    service:
+        bounceIfUnhealthy: false
+        postDeployCmd: #execute a command if healthy
+
+container:
+    type: DOCKER #options: CMD, JAVA, KUBERNETES, ROCKET, COMPOSE, GROUP (our own compose-like impl)
+    docker:
+        image: registry.hub.docker.com/abhayagarwal/batonpass-demo
+        privileged: true
+        network: HOST
+        forcePullImage: true
+        volumes: []
+        cmd: #executes a command to override the container's default command
+
+artifacts: [] #URIs that are unpacked into the root directory of the job or container
+healthChecks: []
+
+resources:
+    cpus: 0.25
+    memoryMb: 256
+    numPorts: 0
+
+constraints:
+    rackSensitive: true
+    zoneSensitive: true
+    affinity: [] #only place next to this other task. If the other task dies then this dies too
+    antiAffinity: []    #never place next to this other task. If the other task is on the host, kill this
+                        #note, if you specify this task as anti-affinity, it is the same as one-instance-per-host
+    attributes: (thisAttr AND thatAttr) OR anotherAttr #ANDs / ORs
+
+instances:
+    initial: 1
+    loadBalancer: []
+    autoscale:
+        min: 1
+        max: 10
+        type: LATENCY
+        #options:
+        #LATENCY (hit an endpoint and see how quick the response is)
+        #RESOURCE (based on resource utilization if and instance exceeds a certain amount)
+        #ENDPOINT (hit an endpoint on any instance that replies with true/false)
+        #DEPENDENT (scale up/down based on another service)
+        latency:
+            endpoint: /health
+            cliff: 1s
+
+
